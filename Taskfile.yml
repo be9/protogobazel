@@ -15,7 +15,7 @@ tasks:
     cmds:
       - rm -rf {{ .GEN_DIR }}
       - mkdir -p {{ .GEN_DIR }}
-      - for: ['foo/foo.proto', 'bar/bar.proto']
+      - for: ['foo/foo.proto foo/foo_enum.proto', 'bar/bar.proto']
         cmd: >
           protoc -I proto/src  
           --grpc-gateway_out=logtostderr=true:{{ .GEN_DIR }}

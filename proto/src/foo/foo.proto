@@ -5,9 +5,11 @@ package foo;
 option go_package = "github.com/be9/protogobazel/lib/proto/foopb";
 
 import "bar/bar.proto";
+import "foo/foo_enum.proto";
 
 message Foo {
     bar.Bar b = 1;
+    FooEnum f = 2;
 }
 
 service S {

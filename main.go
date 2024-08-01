@@ -14,6 +14,7 @@ func main() {
 	}
 	f := &foopb.Foo{
 		B: b,
+		F: foopb.FooEnum_FOO_ENUM_KNOWN,
 	}
 
 	fmt.Println(prototext.Format(f))
