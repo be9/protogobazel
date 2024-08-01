@@ -20,7 +20,7 @@ tasks:
           protoc -I proto/src  
           --grpc-gateway_out=logtostderr=true:{{ .GEN_DIR }}
           --go_out=plugins=grpc:{{ .GEN_DIR }}
-          --grpc-gateway_opt=generate_unbound_methods=true
+          --grpc-gateway_opt generate_unbound_methods=true
           --grpc-gateway_opt paths=source_relative
           ./proto/src/{{ .ITEM }}
       - rm -rf lib/proto/*
