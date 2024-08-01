@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package foo;
+
+option go_package = "github.com/be9/protogobazel/lib/proto/foopb";
+
+import "bar/bar.proto";
+
+message Foo {
+    bar.Bar b = 1;
+}
+
+service S {
+    rpc Meth(MethRequest) returns (MethRequest);
+}
+
+message MethRequest {}
+message MethResponse {}
