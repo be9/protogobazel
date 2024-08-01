@@ -4,4 +4,6 @@ package bar;
 
 option go_package = "github.com/be9/protogobazel/lib/proto/barpb";
 
-message Bar {}
+message Bar {
+    string a = 1;
+}

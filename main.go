@@ -9,7 +9,9 @@ import (
 )
 
 func main() {
-	b := &barpb.Bar{}
+	b := &barpb.Bar{
+		A: "aaaa",
+	}
 	f := &foopb.Foo{
 		B: b,
 	}
