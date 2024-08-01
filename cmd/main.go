@@ -18,4 +18,5 @@ func main() {
 	}
 
 	fmt.Println(prototext.Format(f))
+	barpb.ExtraFn()
 }

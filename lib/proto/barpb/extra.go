@@ -1,0 +1,5 @@
+package barpb
+
+func ExtraFn() {
+
+}
