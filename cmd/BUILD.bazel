@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "cmd_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/be9/protogobazel/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//proto/src/bar:barpb",
+        "//proto/src/foo:foopb",
+        "@org_golang_google_protobuf//encoding/prototext",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    embed = [":cmd_lib"],
+    visibility = ["//visibility:public"],
+)
