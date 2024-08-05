@@ -78,10 +78,18 @@ func (lang *customProtoLang) GenerateRules(args language.GenerateArgs) (result l
 	if strings.HasPrefix(args.Rel, protoSrcPrefix) {
 		for _, r := range args.File.Rules {
 			if r.Kind() == "go_library" {
+				embed := r.AttrStrings("embed")
 				if libProtoLib, ok := lang.libProtoExtras[r.AttrString("importpath")]; ok {
-					embed := r.AttrStrings("embed")
 					if slices.IndexFunc(embed, func(s string) bool { return s == libProtoLib }) < 0 {
 						r.SetAttr("embed", append(embed, libProtoLib))
+					}
+				} else {
+					origLen := len(embed)
+					embed = slices.DeleteFunc(embed, func(s string) bool {
+						return strings.HasPrefix(s, "//"+libProtoPrefix)
+					})
+					if len(embed) != origLen {
+						r.SetAttr("embed", embed)
 					}
 				}
 			}
