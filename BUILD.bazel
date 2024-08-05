@@ -1,5 +1,13 @@
-load("@gazelle//:def.bzl", "gazelle")
+load("@gazelle//:def.bzl", "gazelle", "gazelle_test")
 
-gazelle(name = "gazelle")
+gazelle_test(
+    name = "gazelle_test",
+    workspace = "//:BUILD.bazel",
+)
+
+gazelle(
+    name = "gazelle",
+    gazelle = "//lib/gazelle/entry:gazelle",
+)
 
 # gazelle:exclude **/*.pb.go

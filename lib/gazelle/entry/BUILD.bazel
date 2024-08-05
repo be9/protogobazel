@@ -1,0 +1,9 @@
+load("@gazelle//:def.bzl", "DEFAULT_LANGUAGES", "gazelle_binary")
+
+gazelle_binary(
+    name = "gazelle",
+    languages = DEFAULT_LANGUAGES + [
+        "//lib/gazelle/protolang",
+    ],
+    visibility = ["//visibility:public"],
+)

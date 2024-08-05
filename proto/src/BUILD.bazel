@@ -1,3 +1,3 @@
-# gazelle:lang proto,go
+# gazelle:lang proto,go,custom_proto
 # gazelle:go_generate_proto true
 # gazelle:proto_strip_import_prefix /proto/src

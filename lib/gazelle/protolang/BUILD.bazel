@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "protolang",
+    srcs = [
+        "lang.go",
+        "proto.go",
+    ],
+    importpath = "github.com/be9/protogobazel/lib/gazelle/protolang",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_jhump_protoreflect//desc/protoparse",
+        "@com_github_jhump_protoreflect//desc/protoparse/ast",
+        "@gazelle//language:go_default_library",
+        "@gazelle//rule:go_default_library",
+    ],
+)
