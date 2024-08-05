@@ -54,13 +54,13 @@ func (*customProtoLang) ApparentLoads(func(string) string) []rule.LoadInfo {
 }
 
 func (lang *customProtoLang) GenerateRules(args language.GenerateArgs) (result language.GenerateResult) {
-	// Populate lang.libProtoExtras; any subdir under lib/proto/ that has any extra sources (not *.pb.go),
-	// will have a go_library rule which is recorded into the map.
 	const (
 		libProtoPrefix = "lib/proto/"
 		protoSrcPrefix = "proto/src/"
 	)
 
+	// Populate lang.libProtoExtras; any subdir under lib/proto/ that has any extra sources (not *.pb.go),
+	// will have a go_library rule which is recorded into the map.
 	if strings.HasPrefix(args.Rel, libProtoPrefix) {
 		goLibraryIdx := slices.IndexFunc(args.OtherGen, func(r *rule.Rule) bool {
 			return r.Kind() == "go_library"
@@ -78,6 +78,7 @@ func (lang *customProtoLang) GenerateRules(args language.GenerateArgs) (result l
 	if strings.HasPrefix(args.Rel, protoSrcPrefix) {
 		for _, r := range args.File.Rules {
 			if r.Kind() == "go_library" {
+
 				embed := r.AttrStrings("embed")
 				if libProtoLib, ok := lang.libProtoExtras[r.AttrString("importpath")]; ok {
 					if slices.IndexFunc(embed, func(s string) bool { return s == libProtoLib }) < 0 {
