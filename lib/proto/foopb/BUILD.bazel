@@ -2,7 +2,7 @@ load("//build/bzl:write_go_proto_srcs.bzl", "write_go_proto_sources")
 
 write_go_proto_sources(
     name = "write_pb_go",
-    src = "//proto/src/foopb_proto",
+    src = "//proto/src/foo:foopb_go_proto",
     output_files = [
         "foo.pb.go",
         "foo_enum.pb.go",

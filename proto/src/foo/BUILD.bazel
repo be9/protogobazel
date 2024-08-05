@@ -15,6 +15,7 @@ proto_library(
 
 go_proto_library(
     name = "foopb_go_proto",
+    compilers = ["@rules_go//proto:go_grpc"],
     importpath = "github.com/be9/protogobazel/lib/proto/foopb",
     proto = ":foopb_proto",
     visibility = ["//visibility:public"],
