@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package cool;
+
+option go_package = "github.com/be9/protogobazel/lib/proto/coolpb";
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+  bool cool_message = 50001;
+}

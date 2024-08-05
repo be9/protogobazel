@@ -4,6 +4,12 @@ package bar;
 
 option go_package = "github.com/be9/protogobazel/lib/proto/barpb";
 
+import "cool/options.proto";
+
 message Bar {
     string a = 1;
+}
+
+message KindaCool {
+    option (cool.cool_message) = true;
 }

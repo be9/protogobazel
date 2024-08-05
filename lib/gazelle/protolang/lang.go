@@ -75,7 +75,7 @@ func (lang *customProtoLang) GenerateRules(args language.GenerateArgs) (result l
 
 	// Since lib/proto precedes proto/src, lang.libProtoExtras will be populated
 	// before the first subdir under proto/src/ will be analyzed.
-	if strings.HasPrefix(args.Rel, protoSrcPrefix) {
+	if strings.HasPrefix(args.Rel, protoSrcPrefix) && args.File != nil {
 		for _, r := range args.File.Rules {
 			if r.Kind() == "go_library" {
 

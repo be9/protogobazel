@@ -1,0 +1,9 @@
+load("//build/bzl:write_go_proto_srcs.bzl", "write_go_proto_sources")
+
+write_go_proto_sources(
+    name = "write_pb_go",
+    src = "//proto/src/cool:coolpb_go_proto",
+    output_files = [
+        "options.pb.go",
+    ],
+)

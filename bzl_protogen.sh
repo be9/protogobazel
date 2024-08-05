@@ -12,16 +12,19 @@ usage() {
 }
 
 VERBOSE=""
+ERR_REDIRECT=/dev/null
 MERGE_BASE="origin/main"
 
 all() {
 	test_list_file=$(mktemp)
 	test_errors_file=$(mktemp)
- 	bazel query 'kind(diff_test, //lib/proto/...)' 2>/dev/null > "$test_list_file"
+	bazel query 'kind(diff_test, //lib/proto/...)' 2>"$ERR_REDIRECT" > "$test_list_file"
 
-	[[ -n "$VERBOSE" ]] && echo "$(cat "$test_list_file" | wc -l | perl  -pe 's/^\s+//g') diff test(s) to be run"
+	[[ -n "$VERBOSE" ]] && echo "$(cat "$test_list_file" | wc -l | perl -pe 's/^\s+//g') diff test(s) to be run"
 
-	if ! bazel test --test_summary none --test_output errors --target_pattern_file "$test_list_file" >"$test_errors_file" 2>/dev/null; then
+	if ! bazel test --test_summary none --test_output errors --target_pattern_file "$test_list_file" >"$test_errors_file" 2>"$ERR_REDIRECT"; then
+		[[ -n "$VERBOSE" ]] && echo "tests failed"
+		cat "$test_errors_file"
 		while IFS= read -r line; do
 			[[ -n "$VERBOSE" ]] && echo "$line"
 			eval "$line"
@@ -40,6 +43,7 @@ while getopts "vb:" opt; do
 	case ${opt} in
 		v)
 			VERBOSE=1
+			ERR_REDIRECT=/dev/stderr
 			;;
 		b)
 			MERGE_BASE=${OPTARG}
