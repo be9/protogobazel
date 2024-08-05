@@ -8,3 +8,5 @@
 
 * regulate protoc versions
 * generate `write_go_proto_sources` automatically
+* add `compilers = [ ... ]` to `go_proto_library`
+* figure out proto dep wtfs
