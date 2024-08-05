@@ -18,7 +18,9 @@ MERGE_BASE="origin/main"
 all() {
 	test_list_file=$(mktemp)
 	test_errors_file=$(mktemp)
-	bazel query 'kind(diff_test, //lib/proto/...)' 2>"$ERR_REDIRECT" > "$test_list_file"
+
+	# TODO wrap around bazel cquery when it fails due to a missing file
+	bazel cquery 'kind(diff_test, //lib/proto/...)' --output=starlark 2>"$ERR_REDIRECT" > "$test_list_file"
 
 	[[ -n "$VERBOSE" ]] && echo "$(cat "$test_list_file" | wc -l | perl -pe 's/^\s+//g') diff test(s) to be run"
 
@@ -28,7 +30,7 @@ all() {
 		while IFS= read -r line; do
 			[[ -n "$VERBOSE" ]] && echo "$line"
 			eval "$line"
-		done <<< "$(cat "$test_errors_file" | grep 'bazel run //lib/proto/' | perl -pe 's/^\s+//g' | sort | uniq)"
+		done <<< "$(cat "$test_errors_file" | egrep 'bazel run (@@)?//lib/proto/' | perl -pe 's/^\s+//g' | sort | uniq)"
 	else
 		[[ -n "$VERBOSE" ]] && echo "No relevant proto source updates"
 	fi
