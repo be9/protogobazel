@@ -1,8 +1,17 @@
 load("@rules_go//go:def.bzl", "go_library")
+load("//build/bzl:write_go_proto_srcs.bzl", "write_go_proto_sources")
 
 go_library(
     name = "barpb",
     srcs = ["extra.go"],
     importpath = "github.com/be9/protogobazel/lib/proto/barpb",
     visibility = ["//visibility:public"],
+)
+
+write_go_proto_sources(
+    name = "write_pb_go",
+    src = "//proto/src/bar:barpb_go_proto",
+    output_files = [
+        "bar.pb.go",
+    ],
 )
