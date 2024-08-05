@@ -4,7 +4,10 @@ load("@rules_proto//proto:defs.bzl", "proto_library")
 
 proto_library(
     name = "barpb_proto",
-    srcs = ["bar.proto"],
+    srcs = [
+        "bar.proto",
+        "bar2.proto",
+    ],
     strip_import_prefix = "/proto/src",
     visibility = ["//visibility:public"],
     deps = ["//proto/src/cool:coolpb_proto"],
@@ -19,7 +22,7 @@ go_proto_library(
     importpath = "github.com/be9/protogobazel/lib/proto/barpb",
     proto = ":barpb_proto",
     visibility = ["//visibility:public"],
-    deps = ["//proto/src/cool:coolpb_go_proto"],
+    deps = ["//proto/src/cool:coolpb"],
 )
 
 go_library(

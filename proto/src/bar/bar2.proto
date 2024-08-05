@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package bar;
+
+option go_package = "github.com/be9/protogobazel/lib/proto/barpb";
+
+message Bar2 {
+  string a = 1;
+}

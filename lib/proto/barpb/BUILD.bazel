@@ -13,6 +13,7 @@ write_go_proto_sources(
     src = "//proto/src/bar:barpb_go_proto",
     output_files = [
         "bar.pb.go",
+        "bar2.pb.go",
         "bar.cool.go",
     ],
 )

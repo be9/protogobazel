@@ -5,7 +5,7 @@ set -euo pipefail
 usage() {
 	echo "Usage: $0 [-v] [-b MERGE_BASE] [all|incremental]"
 	echo "  -v            : be verbose"
-	echo "  -b MERGE_BASE : defines merge base for incremental mode (default: origin/main)"
+#	echo "  -b MERGE_BASE : defines merge base for incremental mode (default: origin/main)"
 	echo "  all           : Run diff tests and regen what fails (default mode)"
 	echo "  incremental   : Use rdeps"
 	exit 1
@@ -13,7 +13,7 @@ usage() {
 
 VERBOSE=""
 ERR_REDIRECT=/dev/null
-MERGE_BASE="origin/main"
+#MERGE_BASE="origin/main"
 
 all() {
 	test_list_file=$(mktemp)
@@ -48,7 +48,7 @@ while getopts "vb:" opt; do
 			ERR_REDIRECT=/dev/stderr
 			;;
 		b)
-			MERGE_BASE=${OPTARG}
+#			MERGE_BASE=${OPTARG}
 			;;
         *)
             usage
