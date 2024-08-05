@@ -39,6 +39,10 @@ func main() {
 
 		// 3. For each message add our Foo() method
 		for _, msg := range file.Proto.MessageType {
+			for _, ext := range msg.GetExtension() {
+				fmt.Println("%#v", ext)
+			}
+
 			buf.Write([]byte(fmt.Sprintf(`
             func (x %s) IsCool() bool {
                return true

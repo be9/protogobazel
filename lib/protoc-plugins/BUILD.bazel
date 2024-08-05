@@ -1,0 +1,9 @@
+load("@rules_go//proto:compiler.bzl", "go_proto_compiler")
+
+go_proto_compiler(
+    name = "go_cool",
+    plugin = "//lib/protoc-plugins/protoc-gen-cool",
+    suffix = ".cool.go",
+    valid_archive = False,
+    visibility = ["//visibility:public"],
+)

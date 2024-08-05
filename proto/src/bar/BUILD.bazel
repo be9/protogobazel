@@ -12,9 +12,14 @@ proto_library(
 
 go_proto_library(
     name = "barpb_go_proto",
+    compilers = [
+        "@rules_go//proto:go_proto",
+        "//lib/protoc-plugins:go_cool",
+    ],
     importpath = "github.com/be9/protogobazel/lib/proto/barpb",
     proto = ":barpb_proto",
     visibility = ["//visibility:public"],
+    deps = ["//proto/src/cool:coolpb_go_proto"],
 )
 
 go_library(
