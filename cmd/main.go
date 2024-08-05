@@ -19,4 +19,6 @@ func main() {
 
 	fmt.Println(prototext.Format(f))
 	barpb.ExtraFn()
+
+	fmt.Printf("Cool: %v\n", barpb.KindaCool{}.IsCool())
 }

@@ -16,4 +16,5 @@ gazelle(
 )
 
 # gazelle:exclude **/*.pb.go
+# gazelle:exclude **/*.cool.go
 # gazelle:go_grpc_compilers @rules_go//proto:go_grpc

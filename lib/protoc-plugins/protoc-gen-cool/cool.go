@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/be9/protogobazel/lib/proto/coolpb"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/pluginpb"
@@ -32,6 +33,7 @@ func main() {
 	for _, file := range plugin.Files {
 		// 1. Initialise a buffer to hold the generated code
 		var buf bytes.Buffer
+		empty := true
 
 		// 2. Write the package name
 		pkg := fmt.Sprintf("package %s", file.GoPackageName)
@@ -39,30 +41,34 @@ func main() {
 
 		// 3. For each message add our Foo() method
 		for _, msg := range file.Proto.MessageType {
-			for _, ext := range msg.GetExtension() {
-				fmt.Println("%#v", ext)
+			ext := proto.GetExtension(msg.GetOptions(), coolpb.E_CoolMessage)
+			if ext != nil {
+				enabled := ext.(bool)
+				if enabled {
+					buf.Write([]byte(fmt.Sprintf(`
+func (x %s) IsCool() bool {
+   return true
+}`, *msg.Name)))
+					empty = false
+				}
 			}
-
-			buf.Write([]byte(fmt.Sprintf(`
-            func (x %s) IsCool() bool {
-               return true
-            }`, *msg.Name)))
 		}
 
 		// 4. Specify the output filename, in this case test.foo.go
-		filename := file.GeneratedFilenamePrefix + ".cool.go"
-		f := plugin.NewGeneratedFile(filename, ".")
+		if !empty {
+			filename := file.GeneratedFilenamePrefix + ".cool.go"
+			f := plugin.NewGeneratedFile(filename, ".")
 
-		// 5. Pass the data from our buffer to the plugin file struct
-		_, err := f.Write(buf.Bytes())
-		if err != nil {
-			panic(err)
+			// 5. Pass the data from our buffer to the plugin file struct
+			_, err := f.Write(buf.Bytes())
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 
 	// Generate a response from our plugin and marshal as protobuf
-	stdout := plugin.Response()
-	out, err := proto.Marshal(stdout)
+	out, err := proto.Marshal(plugin.Response())
 	if err != nil {
 		panic(err)
 	}
